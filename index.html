@@ -1,18 +1,595 @@
 <!doctype html>
 <html lang="sv">
 <head>
-  <meta charset="utf-8">
-  <title>Learning English</title>
-</head>
-<body>
-  <h1>Learning English</h1>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>A New Mate – Australia</title>
 
-  <ul>
-    <li>
-      <a href="./sp5ch2a-a-new-mate/">
-        SP5 CH2A – A New Mate
-      </a>
-    </li>
-  </ul>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;600&display=swap" rel="stylesheet">
+
+  <style>
+    html, body{ width:100%; margin:0; padding:0; }
+    *, *::before, *::after{ box-sizing:border-box; }
+
+    body{
+      font-family: "OpenDyslexic", "Lexend", Arial, sans-serif;
+      font-size: 18px;
+      line-height: 1.7;
+      padding: 20px;
+      background: #fff;
+      color: #111;
+    }
+
+    .page{ width:100%; max-width:100%; }
+
+    h1{
+      margin: 0 0 10px 0;
+      font-size: 22px;
+      line-height: 1.3;
+    }
+
+    .small{
+      font-size: 14px;
+      color: #444;
+      margin: 0 0 18px 0;
+    }
+
+    h2{
+      font-size: 20px;
+      margin: 0 0 16px 0;
+      font-weight: 600;
+      line-height: 1.3;
+    }
+
+    p{ margin: 0 0 16px 0; }
+    p:last-child{ margin-bottom: 0; }
+
+    .w{
+      position: relative;
+      cursor: help;
+      border-bottom: 1px dotted #666;
+      padding: 0 1px;
+    }
+
+    .w:hover::after, .w:focus::after{
+      content: attr(data-sv);
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      bottom: 140%;
+      background: #111;
+      color: #fff;
+      padding: 6px 8px;
+      border-radius: 8px;
+      font-size: 14px;
+      white-space: nowrap;
+      z-index: 10;
+      max-width: 420px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .w:hover::before, .w:focus::before{
+      content: "";
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      bottom: 120%;
+      border: 6px solid transparent;
+      border-top-color: #111;
+      z-index: 10;
+    }
+
+    .audio{ margin: 0 0 18px 0; }
+    .audio iframe{
+      width: 100%;
+      height: 90px;
+      border: 0;
+      border-radius: 12px;
+      overflow: hidden;
+      display: block;
+      background: #f6f6f6;
+    }
+
+    /* Bild under text */
+    .imgSection{
+      margin-top: 26px;
+      padding-top: 18px;
+      border-top: 1px solid #e6e6e6;
+    }
+    figure{ margin: 0; }
+    .imgUnderText{
+      width: 100%;
+      max-width: 980px;
+      height: auto;
+      border: 1px solid #e6e6e6;
+      border-radius: 12px;
+      display: block;
+      background: #fafafa;
+    }
+    figcaption{
+      margin-top: 8px;
+      font-size: 14px;
+      color: #444;
+    }
+    a{ color: inherit; }
+  </style>
+</head>
+
+<body>
+  <div class="page">
+    <h1>What would it be like to live in Australia?</h1>
+    <div class="small">För muspekaren över ord med prickat understreck för svensk översättning.</div>
+
+    <div class="audio" id="audioWrap" style="display:none;">
+      <iframe id="audioFrame" allow="autoplay"></iframe>
+    </div>
+
+    <div id="out" aria-label="Text med hover-översättning"></div>
+
+    <!-- BILD UNDER TEXTEN -->
+    <div class="imgSection" aria-label="Bild under texten">
+      <h2>Australia – karta</h2>
+      <figure>
+        <img
+          class="imgUnderText"
+          src="https://raw.githubusercontent.com/Karmatante/PermaLinks_IMG/b4f9d65b0ea7aefed2bacdba6bb92dc38be85cd5/australia.jpg"
+          alt="Karta över Australien"
+          loading="lazy"
+        >
+        <figcaption>
+          <a href="https://raw.githubusercontent.com/Karmatante/PermaLinks_IMG/b4f9d65b0ea7aefed2bacdba6bb92dc38be85cd5/australia.jpg" target="_blank" rel="noopener">
+            Öppna bilden i ny flik
+          </a>
+        </figcaption>
+      </figure>
+    </div>
+  </div>
+
+  <script>
+    /* =========================
+       DU ÄNDRAR ENDAST HÄR
+       ========================= */
+
+    // A) Drive-filens ID (från länken .../d/ID/view). Lämna tomt "" om du inte vill ha ljud.
+    const DRIVE_FILE_ID = "";
+
+    // B) Ordlista: en rad per ord/fras: engelska = svenska
+    const RAW_LIST = `
+a = en/ett
+about = om
+across = över
+Actually = faktiskt
+all = alla
+already = redan
+also = också
+amazing = fantastisk
+an = en/ett
+and = och
+animal = djur
+another = en annan
+answer = svara
+are = är
+as = som
+asked = frågade
+at = vid/på
+Barrier = barriär
+be = vara
+because = eftersom
+been = varit
+Before = innan
+began = började
+big = stor
+bit = lite
+blue = blå
+Bonza = kanon/toppen (australisk slang)
+brolly = paraply (australisk slang)
+brown = brun
+built = byggt
+But = men
+can = kan
+can't = kan inte
+class = klass
+coast = kust
+cold = kall
+continent = kontinent
+coral = korall
+dark = mörk
+different = olika/annorlunda
+dinkum = dinkum (del av uttrycket “fair dinkum”)
+diving = dykning
+do = göra
+doesn't = gör inte
+don't = gör inte
+dusting = ett tunt lager
+Everyone = alla (var och en)
+example = exempel
+excellent = utmärkt
+excited = entusiastisk/uppspelt
+expression = uttryck
+expressions = uttryck
+eyes = ögon
+fair = rättvis/just
+family = familj
+feels = känns
+for = för
+freckles = fräknar
+friend = vän
+from = från
+get = bli/få
+gets = får/blir
+girl = flicka
+give = ge
+given = gett/givit
+glad = glad
+go = gå/åka
+gone = åkt/gått
+good = bra
+Great = stora (i namn)
+had = hade
+hair = hår
+hand = hand
+happy = glad
+has = har
+have = har
+he = han
+hear = höra
+Hemisphere = halvklot
+her = hennes
+here = här
+his = hans
+home = hem
+honest = ärlig
+how = hur
+I = jag
+I'm = jag är
+I've = jag har
+idea = idé
+in = i
+is = är
+it = det
+It's = det är
+January = januari
+July = juli
+kinds = sorter/typer
+km = km (kilometer)
+know = veta
+largest = största
+lies = ligger
+life = liv
+like = som/lik
+little = lite/liten
+live = leva/bo
+lived = bodde
+located = belägen
+long = lång
+longer = längre
+lot = mycket
+lots = massor
+Mate = kompis (australisk engelska)
+me = mig
+means = betyder
+met = träffat/mött
+might = kanske/skulle kunna
+miles = miles (engelska mil)
+miss = sakna
+more = mer
+Most = flest/mest
+moved = flyttade
+Ms = fru/fröken (Ms.)
+My = min/mitt
+near = nära
+never = aldrig
+New = ny
+nice = trevlig/snäll
+nodded = nickade
+northeast = nordöst
+nose = näsa
+of = av
+off = utanför
+one = en/ett
+or = eller
+our = vår/vårt/våra
+pale = blek
+part = del
+people = människor
+place = plats
+plant = växt
+questions = frågor
+rain = regn
+raised = räckte upp
+really = verkligen
+recently = nyligen
+Reef = rev
+reverse = omvända
+said = sa/sade
+say = säga
+scuba = scuba (dykning med tuber)
+seasons = årstider
+second = näst största/andra
+She = hon
+she'd = hon skulle
+shyly = blygt
+six = sex
+sledding = pulkaåkning
+smiled = log
+snowman = snögubbe
+snows = snöar
+snowy = snöig
+so = så
+some = några
+Southern = södra
+speak = tala
+started = började
+state = delstat
+States = stater
+student = elev
+summertime = sommartid/sommar
+Ta = tack (australisk slang)
+tall = lång
+teach = lära ut
+tell = berätta
+Texas = Texas
+than = än
+thank = tacka
+that = det/att
+the = den/det/de
+them = dem
+there = där
+they = de
+thick = tjock
+think = tro/tänka
+this = det här/den här
+to = att/till
+told = berättade/sa
+tropical = tropisk
+try = försöka
+twice = dubbelt/två gånger
+Umbrella = paraply
+United = förenade
+until = tills
+us = oss
+very = väldigt
+wait = vänta
+was = var
+we = vi
+We're = vi är
+weather = väder
+week = vecka
+what = vad
+where = var
+which = vilken/vilket/vilka
+why = varför
+winter = vinter
+winters = vintrar
+wintertime = vintertid/vinter
+with = med
+won't = kommer inte
+word = ord
+words = ord
+world = värld
+Yes = ja
+you = du/ni
+`;
+
+    // C) Texten: behåll tomrader för stycken
+    const TEXT = `A New Mate
+
+“I think most of you have already met our new student, Gemma,” said Ms. Dimitri to her
+class. “As you know, she has recently moved here from Australia. I know you all have lots of
+questions about Australia, and Gemma has said she’d be happy to answer them. We can also
+try to give her an idea of what life is like here in Massachusetts.”
+
+Gemma was a tall girl with thick, dark brown hair. She had pale blue eyes, and there
+was a dusting of freckles across her nose. She smiled shyly at the class. “I’m very happy to be
+here,” she said. “Everyone has been really nice to me. It feels like I’ve been here longer than a
+week already.”
+
+Ms. Dimitri smiled. “I’m glad to hear it. We’re excited to have you here, Gemma. Before we
+get started, why don’t you tell everyone where you lived in Australia.”
+
+“My family lived in Queensland,” began Gemma. “It is one of Australia’s six states, and
+it’s located in the northeast part of the continent. Queensland is the second largest state in
+Australia. It’s a bit more than twice as big as Texas.”
+
+“What is the weather like there?” asked Kayla. “Do you have cold, snowy winters like
+we do here?”
+
+“Actually, because Australia is in the Southern Hemisphere, the seasons are the reverse
+of what they are in the United States,” said Gemma. “Queensland is in a tropical part of
+Australia, so it doesn’t get very cold. In January, which is summertime, it is in the 80s and 90s.
+In July, which is wintertime, it might be in the 60s. Queensland gets a lot of rain, and I won’t
+miss that at all. I can’t wait until it snows here this winter! I’ve never built a snowman or gone
+sledding before.”
+
+“Queensland is near Australia’s Great Barrier Reef,” Ms. Dimitri told the class. “Gemma, can
+you tell us a little about it?”
+
+Gemma nodded. “The Great Barrier Reef is the largest coral reef in the world. It lies off
+the coast of Queensland and is more than 1,200 miles (1,931.21 km) long. It is home to all kinds of
+animal and plant life. It is an amazing place to go scuba diving.”
+
+Vijay raised his hand. “Can you teach us how to say some words in Australian?” he asked.
+
+“Most people in Australia speak English,” said Gemma. “But we do have some different
+words and expressions than you do in America. For example, the word for friend is mate. Bonza
+means very good. Umbrella is brolly, and honest is fair dinkum.”
+
+“Is there another word or expression for thank you?” asked Ms. Dimitri.
+
+“Yes, ta means thank you.”
+
+“Gemma, you have given us an excellent idea of what it is like to live in Australia. Ta,
+Gemma. We’re so glad to have you in our class!”`;
+
+    /* =========================
+       INGEN ÄNDRING UNDER HÄR
+       ========================= */
+
+    // Normaliserar även typografiska apostrofer (’) till '
+    function normalizeKey(raw){
+      return raw
+        .trim()
+        .replace(/\s+/g, " ")
+        .replace(/[’‘`´]/g, "'")
+        .toLocaleLowerCase("en-US");
+    }
+
+    function buildDict(raw){
+      const dict = {};
+      raw.split("\n").forEach(line => {
+        const trimmed = line.trim();
+        if(!trimmed) return;
+
+        const idx = trimmed.indexOf("=");
+        if(idx === -1) return;
+
+        const left = trimmed.slice(0, idx).trim();
+        const right = trimmed.slice(idx + 1).trim();
+        if(!left || !right) return;
+
+        const key = normalizeKey(left);
+        dict[key] = right;
+      });
+      return dict;
+    }
+
+    function tokenizeEnglish(text){
+      const re = /[A-Za-z]+(?:[’'][A-Za-z]+)*(?:-[A-Za-z]+(?:[’'][A-Za-z]+)*)*|[0-9]+|\s+|[^A-Za-z0-9\s]+/g;
+      return text.match(re) || [];
+    }
+
+    function isWord(tok){
+      return /^[A-Za-z]+(?:[’'][A-Za-z]+)*(?:-[A-Za-z]+(?:[’'][A-Za-z]+)*)*$/.test(tok) || /^[0-9]+$/.test(tok);
+    }
+
+    function isWhitespace(tok){
+      return /^\s+$/.test(tok);
+    }
+
+    function renderInline(container, text, dict){
+      const tokens = tokenizeEnglish(text);
+
+      const maxWords = Object.keys(dict)
+        .map(k => k.split(" ").length)
+        .reduce((a, b) => Math.max(a, b), 1);
+
+      let i = 0;
+      while(i < tokens.length){
+        const tok = tokens[i];
+
+        if(!isWord(tok)){
+          container.appendChild(document.createTextNode(tok));
+          i += 1;
+          continue;
+        }
+
+        let matched = false;
+
+        for(let k = maxWords; k >= 2; k--){
+          let j = i;
+          let words = [];
+          let endIndex = i;
+
+          while(words.length < k){
+            if(j >= tokens.length) break;
+            if(!isWord(tokens[j])) break;
+
+            words.push(tokens[j]);
+            endIndex = j;
+
+            if(words.length === k) break;
+
+            j += 1;
+            if(j >= tokens.length || !isWhitespace(tokens[j])){
+              words = [];
+              break;
+            }
+            while(j < tokens.length && isWhitespace(tokens[j])) j += 1;
+          }
+
+          if(words.length === k){
+            const key = normalizeKey(words.join(" "));
+            const sv = dict[key];
+            if(sv){
+              const segment = tokens.slice(i, endIndex + 1).join("");
+              const span = document.createElement("span");
+              span.className = "w";
+              span.textContent = segment;
+              span.setAttribute("tabindex", "0");
+              span.setAttribute("data-sv", sv);
+              container.appendChild(span);
+
+              i = endIndex + 1;
+              matched = true;
+              break;
+            }
+          }
+        }
+
+        if(matched) continue;
+
+        const key1 = normalizeKey(tok);
+        const sv1 = dict[key1];
+
+        if(sv1){
+          const span1 = document.createElement("span");
+          span1.className = "w";
+          span1.textContent = tok;
+          span1.setAttribute("tabindex", "0");
+          span1.setAttribute("data-sv", sv1);
+          container.appendChild(span1);
+        } else {
+          container.appendChild(document.createTextNode(tok));
+        }
+
+        i += 1;
+      }
+    }
+
+    function setupAudio(){
+      const wrap = document.getElementById("audioWrap");
+      const frame = document.getElementById("audioFrame");
+      if(!wrap || !frame) return;
+
+      const id = (DRIVE_FILE_ID || "").trim();
+      if(!id){
+        wrap.style.display = "none";
+        return;
+      }
+
+      frame.src = "https://drive.google.com/file/d/" + encodeURIComponent(id) + "/preview";
+      wrap.style.display = "block";
+    }
+
+    function render(){
+      setupAudio();
+
+      const dict = buildDict(RAW_LIST);
+      const out = document.getElementById("out");
+      out.innerHTML = "";
+
+      const clean = (TEXT || "").replace(/\r\n/g, "\n").trim();
+      const blocks = clean.split(/\n\s*\n+/);
+
+      blocks.forEach((block, idx) => {
+        const blockText = block.replace(/\n+/g, " ").replace(/\s+/g, " ").trim();
+
+        if(idx === 0){
+          const h2 = document.createElement("h2");
+          renderInline(h2, blockText, dict);
+          out.appendChild(h2);
+        } else {
+          const p = document.createElement("p");
+          renderInline(p, blockText, dict);
+          out.appendChild(p);
+        }
+      });
+    }
+
+    render();
+  </script>
 </body>
 </html>
