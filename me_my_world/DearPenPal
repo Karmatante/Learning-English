@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="sv">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Pen Pal Letter – Hover Vocabulary</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;600&display=swap" rel="stylesheet">
+
+  <style>
+    html, body{ width:100%; margin:0; padding:0; }
+    *, *::before, *::after{ box-sizing:border-box; }
+
+    body{
+      font-family: "OpenDyslexic", "Lexend", Arial, sans-serif;
+      font-size: 18px;
+      line-height: 1.7;
+      padding: 20px;
+      background: #fff;
+      color: #111;
+    }
+
+    h1{ font-size:22px; margin:0 0 10px 0; }
+    h2{ font-size:20px; margin:0 0 16px 0; }
+    p{ margin:0 0 16px 0; }
+
+    .small{
+      font-size:14px;
+      color:#444;
+      margin:0 0 18px 0;
+    }
+
+    .w{
+      position:relative;
+      cursor:help;
+      border-bottom:1px dotted #666;
+      padding:0 1px;
+    }
+
+    .w:hover::after, .w:focus::after{
+      content: attr(data-sv);
+      position:absolute;
+      left:50%;
+      transform:translateX(-50%);
+      bottom:140%;
+      background:#111;
+      color:#fff;
+      padding:6px 8px;
+      border-radius:8px;
+      font-size:14px;
+      white-space:nowrap;
+      z-index:10;
+    }
+
+    .w:hover::before, .w:focus::before{
+      content:"";
+      position:absolute;
+      left:50%;
+      transform:translateX(-50%);
+      bottom:120%;
+      border:6px solid transparent;
+      border-top-color:#111;
+      z-index:10;
+    }
+  </style>
+</head>
+
+<body>
+<div class="page">
+  <h1>Pen Pal Letter</h1>
+  <div class="small">Hovra över markerade ord för svensk översättning.</div>
+
+  <div id="out"></div>
+</div>
+
+<script>
+const RAW_LIST = `
+dear = kära
+pen pal = brevvän
+name = namn
+years old = år gammal
+from = från
+small town = liten stad
+near = nära
+sea = hav
+student = elev
+secondary school = högstadiet
+year = årskurs
+friendly = vänlig
+shy = blyg
+meet = träffa
+learn = lära sig
+excited = glad
+family = familj
+younger = yngre
+energetic = energisk
+dog = hund
+playful = lekfull
+loyal = lojal
+free time = fritid
+listening = lyssna
+music = musik
+playing = spela
+football = fotboll
+relax = slappna av
+stressed = stressad
+strong = stark
+confident = självsäker
+films = filmer
+video games = tv-spel
+friends = vänner
+kind = snälla
+school = skola
+subjects = ämnen
+favourite = favorit
+questions = frågor
+brothers = bröder
+sisters = systrar
+pets = husdjur
+best wishes = vänliga hälsningar
+`;
+
+const TEXT = `
+Dear Pen Pal,
+
+Hello. My name is Alex, and I am 13 years old. I am from Sweden, and I live in a small town near the sea. I am a student in secondary school, and I am in year 7. I am quite friendly, but sometimes I am a little shy when I meet new people.
+
+I have a small family. I have one sister, and she is younger than me. She is very energetic and talks a lot. I also have a dog. His name is Max. He is playful and loyal.
+
+In my free time, I like listening to music and playing football. Music helps me relax when I feel stressed. Football makes me feel strong and confident. I also enjoy watching films and playing video games with my friends.
+
+At school, I have many subjects. English is my favourite subject. I like learning new words and speaking to people from other countries.
+
+Now I want to ask you some questions. Who are you? Where are you from? What do you like to do in your free time? Do you have any brothers, sisters, or pets? How do you feel about school?
+
+Best wishes,
+Alex
+`;
+
+function normalizeKey(raw){
+  return raw.trim().replace(/\s+/g," ").toLowerCase();
+}
+
+function buildDict(raw){
+  const dict = {};
+  raw.split("\n").forEach(line=>{
+    const i=line.indexOf("=");
+    if(i===-1) return;
+    dict[normalizeKey(line.slice(0,i))]=line.slice(i+1).trim();
+  });
+  return dict;
+}
+
+function tokenize(text){
+  return text.match(/[A-Za-z]+(?:-[A-Za-z]+)*|\s+|[^A-Za-z\s]+/g) || [];
+}
+
+function renderInline(el,text,dict){
+  const tokens=tokenize(text);
+  tokens.forEach(tok=>{
+    const key=normalizeKey(tok);
+    if(dict[key]){
+      const s=document.createElement("span");
+      s.className="w";
+      s.textContent=tok;
+      s.setAttribute("data-sv",dict[key]);
+      el.appendChild(s);
+    } else {
+      el.appendChild(document.createTextNode(tok));
+    }
+  });
+}
+
+const dict=buildDict(RAW_LIST);
+const out=document.getElementById("out");
+TEXT.trim().split(/\n\s*\n/).forEach((b,i)=>{
+  const el=i===0?document.createElement("h2"):document.createElement("p");
+  renderInline(el,b.replace(/\n+/g," "),dict);
+  out.appendChild(el);
+});
+</script>
+</body>
+</html>
